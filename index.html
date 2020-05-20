@@ -10,24 +10,29 @@
 
     <!-- Google Icons -->
     <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
-
-
+    
 
 </head>
 <body>
-    <container>
-        <row>
+    <div class="container-fluid">
+        <div class="row">
+            <!-- City Search -->
             <div class="col-md-4">
                 <h4>Search For A City</h4>
                 <div>
                     <form>
-                        <input type="text" id="userInput" class="form-control" placeholder="City Name" aria-label="Recipient's username">
+                        <input type="text" id="userInput" class="form-control" placeholder="City Name" aria-label="Recipient's username" value="">
                         <button class="btn btn-outline-secondary" type="button submit" id="submitBtn"><span class="material-icons">search</span></button>
                     </form>
                 </div>
                 <div id="previousInputs"></div>
             </div>
-        </row>
+
+            <!-- City Info -->
+            <div class="col-md-8">
+                <div id="cityInfo"></div>
+            </div>
+        </div>
     </container>
 
     <!-- jQuery CDN -->
