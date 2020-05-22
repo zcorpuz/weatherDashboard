@@ -2,6 +2,9 @@ $(document).ready(function(){
 
     // Global Variables
     var cities = [];
+    var lat = [];
+    var lon = [];
+
 
     // Function that appends previous inputs into Div
     function pastCity() {
@@ -28,6 +31,7 @@ $(document).ready(function(){
     function cityInfo() {
         // Put city of choice into a variable
         var city = $("#userInput").val();
+        // Moment.js code
         var currentDate = moment().format("MMMM Do YYYY, h:mm a"); 
         // Ajax Call
         $.ajax({
@@ -54,23 +58,29 @@ $(document).ready(function(){
                 // Create wind speed data to display in div
                 var windSpeed = "Wind Speed: " + data.wind.speed + " MPH";
                 $("#cityInfo").append(windSpeed);
+                lat.push(data.coord.lat);
+                lon.push(data.coord.lon);
+                // Calling cityUV Function in here because of event loop ordering
+                cityUV();
+                // Splice both arrays so that it gets rid of previous lat and lon coordinates
+                lat.splice(0,1);
+                lon.splice(0,1);
             }
         })
     }
 
-
     // Function that gets UV Index
-    // function cityUV() {
-    //     // Ajax Call
-    //     $.ajax({
-    //         url: 'http://api.openweathermap.org/data/2.5/uvi/forecast?appid=666d531c4f692dda2c8468cb9e366c40&lat=' + cityLat + '&lon=' + cityLon,
-    //         method: "GET",
-    //         dataType: "jsonp",
-    //         success: function(data){
-    //             console.log(url);
-    //         }
-    //     })
-    // }
-
+    function cityUV() {
+        $.ajax({
+            url: 'http://api.openweathermap.org/data/2.5/uvi?lat=' + lat[0] + '&lon=' + lon[0] + '&appid=666d531c4f692dda2c8468cb9e366c40',
+            method: "GET",
+            dataType: "json",
+            success: function(data){
+                // Create variable for uvi and append to div
+                var uvi = "UVI Index: " + data.value + "";
+                $("#cityInfo").append(uvi);
+            }
+        })
+    }
 })
 
