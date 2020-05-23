@@ -59,6 +59,11 @@ $(document).ready(function(){
                 var h1El = $("<h1>");
                 h1El.text(city);
                 $("#cityName").append(h1El);
+
+                var iconCurrent = data.weather[0].icon;
+                var iconUrlCurrent = "http://openweathermap.org/img/w/" + iconCurrent + ".png";
+                $("#iconCurrent").attr('src', iconUrlCurrent);
+
                 // Displays current day
                 var h3El = $("<h3>");
                 h3El.text(currentDate);
@@ -113,7 +118,7 @@ $(document).ready(function(){
                     $("#uvIndex").css("color", "white");
                 }else if (uviValue >= 6 && uviValue <= 7.99) {
                     $("#uvIndex").css("background-color", "orange");
-                    $("#uvIndex").css("width", "10%");
+                    $("#uvIndex").css("width", "9%");
                     $("#uvIndex").css("padding-left", "4px");
                     $("#uvIndex").css("color", "white");
                 }else if (uviValue >= 8 && uviValue <= 10.99) {
