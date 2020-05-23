@@ -2,10 +2,25 @@ $(document).ready(function(){
 
     // Global Variables
     var cities = [];
+    var previousCities = [];
     var lat = [];
     var lon = [];
 
     clickEvent();
+
+    function appendCities() {
+        previousCities = JSON.parse(localStorage.getItem("cities"));
+        if (previousCities == null) {
+            previousCities = [];
+        } else {
+            for (var i = 0; i < previousCities.length; i++) {
+                $("#previousInputs").append(previousCities[i])
+                $("#previousInputs").append("<br>");
+            }
+        }
+    }
+
+    appendCities();
     
     // Event for city search submission
     function clickEvent() {
@@ -13,6 +28,8 @@ $(document).ready(function(){
             event.preventDefault();
             var userInput = $("#userInput").val().trim();
             cities.push(userInput);
+            previousCities.push(userInput);
+            localStorage.setItem('cities', JSON.stringify(previousCities));
             pastCity();
             cityInfo();
             fiveDay();
@@ -26,14 +43,11 @@ $(document).ready(function(){
         $("#previousInputs").empty();
         for (var i = 0; i < cities.length; i++) {
             // Creates button for previous cities
-            var cityBtn = $("<button>");
+            var cityPrev = $("<p>");
             // Add appropriate classes and attributes
-            cityBtn.text(cities[i]);
-            cityBtn.addClass("btn btn-light");
-            cityBtn.attr('type', 'button');
-            cityBtn.attr('id', 'submitBtn');
+            cityPrev.text(cities[i]);
             // Adds button to Divs
-            $("#previousInputs").prepend(cityBtn);
+            $("#previousInputs").prepend(cityPrev);
         }
     }
 
