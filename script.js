@@ -108,27 +108,27 @@ $(document).ready(function(){
 
                 if (uviValue <= 2.99) {
                     $("#uvIndex").css("background-color", "green");
-                    $("#uvIndex").css("width", "9%");
+                    $("#uvIndex").css("width", "23%");
                     $("#uvIndex").css("padding-left", "4px");
                     $("#uvIndex").css("color", "white");
                 }else if (uviValue >= 3 && uviValue <= 5.99) {
                     $("#uvIndex").css("background-color", "yellow");
-                    $("#uvIndex").css("width", "9%");
+                    $("#uvIndex").css("width", "26%");
                     $("#uvIndex").css("padding-left", "4px");
                     $("#uvIndex").css("color", "white");
                 }else if (uviValue >= 6 && uviValue <= 7.99) {
                     $("#uvIndex").css("background-color", "orange");
-                    $("#uvIndex").css("width", "9%");
+                    $("#uvIndex").css("width", "26%");
                     $("#uvIndex").css("padding-left", "4px");
                     $("#uvIndex").css("color", "white");
                 }else if (uviValue >= 8 && uviValue <= 10.99) {
                     $("#uvIndex").css("background-color", "red");
-                    $("#uvIndex").css("width", "10%");
+                    $("#uvIndex").css("width", "28%");
                     $("#uvIndex").css("padding-left", "4px");
                     $("#uvIndex").css("color", "white");
                 }else if (uviValue >= 11) {
                     $("#uvIndex").css("background-color", "purple");
-                    $("#uvIndex").css("width", "10%");
+                    $("#uvIndex").css("width", "28%");
                     $("#uvIndex").css("padding-left", "4px");
                     $("#uvIndex").css("color", "white");
                 }
