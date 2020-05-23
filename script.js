@@ -50,24 +50,28 @@ $(document).ready(function(){
             dataType: "jsonp",
             success: function(data){
                 // Empties the divs to get rid of previous searches
-                $("#cityInfo").empty();
+                $("#cityName").empty();
+                $("#cityDate").empty();
+                $("#cityTemp").empty();
+                $("#cityHumid").empty();
+                $("#cityWind").empty();
                 //Displays current city in H1 tag
                 var h1El = $("<h1>");
                 h1El.text(city);
-                $("#cityInfo").append(h1El);
+                $("#cityName").append(h1El);
                 // Displays current day
                 var h3El = $("<h3>");
                 h3El.text(currentDate);
-                $("#cityInfo").append(h3El);
+                $("#cityDate").append(h3El);
                 // Create temperature data to display in div
                 var temp = "Temperature: " + data.main.temp + " &#8457;"; 
-                $("#cityInfo").append(temp);
+                $("#cityTemp").append(temp);
                 // Create humidity data to display in div
                 var humidity = "Humidity: " + data.main.humidity + "%";
-                $("#cityInfo").append(humidity);
+                $("#cityHumid").append(humidity);
                 // Create wind speed data to display in div
                 var windSpeed = "Wind Speed: " + data.wind.speed + " MPH";
-                $("#cityInfo").append(windSpeed);
+                $("#cityWind").append(windSpeed);
 
                 // Pushing Latitude and Longitude coordinates into array for UV API
                 lat.push(data.coord.lat);
@@ -99,27 +103,27 @@ $(document).ready(function(){
 
                 if (uviValue <= 2.99) {
                     $("#uvIndex").css("background-color", "green");
-                    $("#uvIndex").css("width", "13%");
+                    $("#uvIndex").css("width", "9%");
                     $("#uvIndex").css("padding-left", "4px");
                     $("#uvIndex").css("color", "white");
                 }else if (uviValue >= 3 && uviValue <= 5.99) {
                     $("#uvIndex").css("background-color", "yellow");
-                    $("#uvIndex").css("width", "13%");
+                    $("#uvIndex").css("width", "9%");
                     $("#uvIndex").css("padding-left", "4px");
                     $("#uvIndex").css("color", "white");
                 }else if (uviValue >= 6 && uviValue <= 7.99) {
                     $("#uvIndex").css("background-color", "orange");
-                    $("#uvIndex").css("width", "13%");
+                    $("#uvIndex").css("width", "10%");
                     $("#uvIndex").css("padding-left", "4px");
                     $("#uvIndex").css("color", "white");
                 }else if (uviValue >= 8 && uviValue <= 10.99) {
                     $("#uvIndex").css("background-color", "red");
-                    $("#uvIndex").css("width", "13%");
+                    $("#uvIndex").css("width", "10%");
                     $("#uvIndex").css("padding-left", "4px");
                     $("#uvIndex").css("color", "white");
                 }else if (uviValue >= 11) {
                     $("#uvIndex").css("background-color", "purple");
-                    $("#uvIndex").css("width", "13%");
+                    $("#uvIndex").css("width", "10%");
                     $("#uvIndex").css("padding-left", "4px");
                     $("#uvIndex").css("color", "white");
                 }
@@ -136,61 +140,91 @@ $(document).ready(function(){
             dataType: "json",
             success: function(data){
                 // Clear each Div to get rid of previous info
-                $("#dayOne").empty();
-                $("#dayTwo").empty();
-                $("#dayThree").empty();
-                $("#dayFour").empty();
-                $("#dayFive").empty();
-                console.log(data);
+                $("#dateOne").empty();
+                $("iconOne").empty();
+                $("#tempOne").empty();
+                $("#humidOne").empty();
+                $("#dateTwo").empty();
+                $("iconTwo").empty();
+                $("#tempTwo").empty();
+                $("#humidTwo").empty();
+                $("#dateThree").empty();
+                $("iconThree").empty();
+                $("#tempThree").empty();
+                $("#humidThree").empty();
+                $("#dateFour").empty();
+                $("iconFour").empty();
+                $("#tempFour").empty();
+                $("#humidFour").empty();
+                $("#dateFive").empty();
+                $("iconFive").empty();
+                $("#tempFive").empty();
+                $("#humidFive").empty();
                 // Create Day 1 Variables
                 var dateOne = data.list[4].dt_txt;
+                var iconOne = data.list[4].weather[0].icon;
+                var iconUrlOne = "http://openweathermap.org/img/w/" + iconOne + ".png";
                 var dateOne = dateOne.substr(0, 10);
                 var tempOne = "Temp: " + data.list[4].main.temp + " &#8457;";
                 var humidityOne = "Humidity: " +  data.list[4].main.humidity + "%";
                 // Append Day 1 Info to Day 1 Div
-                $("#dayOne").append(dateOne);
-                $("#dayOne").append(tempOne);
-                $("#dayOne").append(humidityOne);
+                $("#dateOne").append(dateOne);
+                $("#iconOne").attr('src', iconUrlOne);
+                $("#iconOne").append(iconOne);
+                $("#tempOne").append(tempOne);
+                $("#humidOne").append(humidityOne);
 
                 // Create Day 2 Variables
                 var dateTwo = data.list[12].dt_txt;
+                var iconTwo = data.list[12].weather[0].icon;
+                var iconUrlTwo = "http://openweathermap.org/img/w/" + iconTwo + ".png";
                 var dateTwo = dateTwo.substr(0, 10);
                 var tempTwo = "Temp: " + data.list[12].main.temp + " &#8457;";
                 var humidityTwo = "Humidity: " + data.list[12].main.humidity + "%";
                 // Append Day 2 Info to Day 2 Div
-                $("#dayTwo").append(dateTwo);
-                $("#dayTwo").append(tempTwo);
-                $("#dayTwo").append(humidityTwo);
+                $("#dateTwo").append(dateTwo);
+                $("#iconTwo").attr('src', iconUrlTwo);
+                $("#tempTwo").append(tempTwo);
+                $("#humidTwo").append(humidityTwo);
 
                 // Create Day 3 Variables
                 var dateThree = data.list[20].dt_txt;
+                var iconThree = data.list[20].weather[0].icon;
+                var iconUrlThree = "http://openweathermap.org/img/w/" + iconThree + ".png";
                 var dateThree = dateThree.substr(0, 10);
                 var tempThree = "Temp: " + data.list[20].main.temp + " &#8457;";
                 var humidityThree = "Humidity: " + data.list[20].main.humidity + "%";
                 // Append Day 3 Info to Day 3 Div
-                $("#dayThree").append(dateThree);
-                $("#dayThree").append(tempThree);
-                $("#dayThree").append(humidityThree);
+                $("#dateThree").append(dateThree);
+                $("#iconThree").attr('src', iconUrlThree);
+                $("#tempThree").append(tempThree);
+                $("#humidThree").append(humidityThree);
 
                 // Create Day 4 Variables
                 var dateFour = data.list[28].dt_txt;
+                var iconFour = data.list[28].weather[0].icon;
+                var iconUrlFour = "http://openweathermap.org/img/w/" + iconFour + ".png";
                 var dateFour = dateFour.substr(0, 10);
                 var tempFour = "Temp: " + data.list[28].main.temp + " &#8457;";
                 var humidityFour = "Humidity: " + data.list[28].main.humidity + "%";
                 // Append Day 4 Info to Day 4 Div
-                $("#dayFour").append(dateFour);
-                $("#dayFour").append(tempFour);
-                $("#dayFour").append(humidityFour);
+                $("#dateFour").append(dateFour);
+                $("#iconFour").attr('src', iconUrlFour);
+                $("#tempFour").append(tempFour);
+                $("#humidFour").append(humidityFour);
 
                 // Create Day 5 Variables
                 var dateFive = data.list[36].dt_txt;
+                var iconFive = data.list[36].weather[0].icon;
+                var iconUrlFive = "http://openweathermap.org/img/w/" + iconFive + ".png";
                 var dateFive = dateFive.substr(0, 10);
                 var tempFive = "Temp: " + data.list[36].main.temp + " &#8457;";
                 var humidityFive = "Humidity: " + data.list[36].main.humidity + "%";
                 // Append Day 5 Info to Day 5 Div
-                $("#dayFive").append(dateFive);
-                $("#dayFive").append(tempFive);
-                $("#dayFive").append(humidityFive);
+                $("#dateFive").append(dateFive);
+                $("#iconFive").attr('src', iconUrlFive);
+                $("#tempFive").append(tempFive);
+                $("#humidFive").append(humidityFive);
             }
         })
     }
