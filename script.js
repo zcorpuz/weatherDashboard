@@ -5,28 +5,37 @@ $(document).ready(function(){
     var lat = [];
     var lon = [];
 
-
-    // Function that appends previous inputs into Div
+    clickEvent();
+    
+    // Event for city search submission
+    function clickEvent() {
+        $("#submitBtn").on("click", function(event) {
+            event.preventDefault();
+            var userInput = $("#userInput").val().trim();
+            cities.push(userInput);
+            pastCity();
+            cityInfo();
+            fiveDay();
+            $("#userInput").val("");
+        });
+    }
+    
+    // Function for Appending Previous Searches into Div
     function pastCity() {
         // Empties Div so no repeats occur
         $("#previousInputs").empty();
         for (var i = 0; i < cities.length; i++) {
-            var cityHEl = $("<h6>");
-            cityHEl.text(cities[i]);
-            $("#previousInputs").prepend(cityHEl);
+            // Creates button for previous cities
+            var cityBtn = $("<button>");
+            // Add appropriate classes and attributes
+            cityBtn.text(cities[i]);
+            cityBtn.addClass("btn btn-light");
+            cityBtn.attr('type', 'button');
+            cityBtn.attr('id', 'submitBtn');
+            // Adds button to Divs
+            $("#previousInputs").prepend(cityBtn);
         }
     }
-
-    // Event for city search submission
-    $("#submitBtn").on("click", function(event) {
-        event.preventDefault();
-        var userInput = $("#userInput").val().trim();
-        cities.push(userInput);
-        pastCity();
-        cityInfo();
-        fiveDay();
-        $("#userInput").val("");
-    })
 
     // Function for Current Day Weather Conditions
     function cityInfo() {
@@ -59,10 +68,14 @@ $(document).ready(function(){
                 // Create wind speed data to display in div
                 var windSpeed = "Wind Speed: " + data.wind.speed + " MPH";
                 $("#cityInfo").append(windSpeed);
+
+                // Pushing Latitude and Longitude coordinates into array for UV API
                 lat.push(data.coord.lat);
                 lon.push(data.coord.lon);
+
                 // Calling cityUV Function in here because of event loop ordering
                 cityUV();
+                
                 // Splice both arrays so that it gets rid of previous lat and lon coordinates
                 lat.splice(0,1);
                 lon.splice(0,1);
@@ -77,9 +90,39 @@ $(document).ready(function(){
             method: "GET",
             dataType: "json",
             success: function(data){
+                // Empty UV Div
+                $("#uvIndex").empty();
                 // Create variable for uvi and append to div
+                var uviValue = data.value;
                 var uvi = "UVI Index: " + data.value + "";
-                $("#cityInfo").append(uvi);
+                $("#uvIndex").append(uvi);
+
+                if (uviValue <= 2.99) {
+                    $("#uvIndex").css("background-color", "green");
+                    $("#uvIndex").css("width", "13%");
+                    $("#uvIndex").css("padding-left", "4px");
+                    $("#uvIndex").css("color", "white");
+                }else if (uviValue >= 3 && uviValue <= 5.99) {
+                    $("#uvIndex").css("background-color", "yellow");
+                    $("#uvIndex").css("width", "13%");
+                    $("#uvIndex").css("padding-left", "4px");
+                    $("#uvIndex").css("color", "white");
+                }else if (uviValue >= 6 && uviValue <= 7.99) {
+                    $("#uvIndex").css("background-color", "orange");
+                    $("#uvIndex").css("width", "13%");
+                    $("#uvIndex").css("padding-left", "4px");
+                    $("#uvIndex").css("color", "white");
+                }else if (uviValue >= 8 && uviValue <= 10.99) {
+                    $("#uvIndex").css("background-color", "red");
+                    $("#uvIndex").css("width", "13%");
+                    $("#uvIndex").css("padding-left", "4px");
+                    $("#uvIndex").css("color", "white");
+                }else if (uviValue >= 11) {
+                    $("#uvIndex").css("background-color", "purple");
+                    $("#uvIndex").css("width", "13%");
+                    $("#uvIndex").css("padding-left", "4px");
+                    $("#uvIndex").css("color", "white");
+                }
             }
         })
     }
@@ -101,7 +144,7 @@ $(document).ready(function(){
                 console.log(data);
                 // Create Day 1 Variables
                 var dateOne = data.list[4].dt_txt;
-                var dateOne = dateOne.replace('15:00:00', ' ');
+                var dateOne = dateOne.substr(0, 10);
                 var tempOne = "Temp: " + data.list[4].main.temp + " &#8457;";
                 var humidityOne = "Humidity: " +  data.list[4].main.humidity + "%";
                 // Append Day 1 Info to Day 1 Div
@@ -111,7 +154,7 @@ $(document).ready(function(){
 
                 // Create Day 2 Variables
                 var dateTwo = data.list[12].dt_txt;
-                var dateTwo = dateTwo.replace('15:00:00', ' ');
+                var dateTwo = dateTwo.substr(0, 10);
                 var tempTwo = "Temp: " + data.list[12].main.temp + " &#8457;";
                 var humidityTwo = "Humidity: " + data.list[12].main.humidity + "%";
                 // Append Day 2 Info to Day 2 Div
@@ -121,7 +164,7 @@ $(document).ready(function(){
 
                 // Create Day 3 Variables
                 var dateThree = data.list[20].dt_txt;
-                var dateThree = dateThree.replace('15:00:00', ' ');
+                var dateThree = dateThree.substr(0, 10);
                 var tempThree = "Temp: " + data.list[20].main.temp + " &#8457;";
                 var humidityThree = "Humidity: " + data.list[20].main.humidity + "%";
                 // Append Day 3 Info to Day 3 Div
@@ -131,7 +174,7 @@ $(document).ready(function(){
 
                 // Create Day 4 Variables
                 var dateFour = data.list[28].dt_txt;
-                var dateFour = dateFour.replace('15:00:00', ' ');
+                var dateFour = dateFour.substr(0, 10);
                 var tempFour = "Temp: " + data.list[28].main.temp + " &#8457;";
                 var humidityFour = "Humidity: " + data.list[28].main.humidity + "%";
                 // Append Day 4 Info to Day 4 Div
@@ -141,7 +184,7 @@ $(document).ready(function(){
 
                 // Create Day 5 Variables
                 var dateFive = data.list[36].dt_txt;
-                var dateFive = dateFive.replace('15:00:00', ' ');
+                var dateFive = dateFive.substr(0, 10);
                 var tempFive = "Temp: " + data.list[36].main.temp + " &#8457;";
                 var humidityFive = "Humidity: " + data.list[36].main.humidity + "%";
                 // Append Day 5 Info to Day 5 Div
