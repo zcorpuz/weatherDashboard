@@ -52,7 +52,7 @@ $(document).ready(function(){
     }
 
     // Function for Current Day Weather Conditions
-    function cityInfo() {
+    function cityInfo(city) {
         // Put city of choice into a variable
         var city = $("#userInput").val();
         // Moment.js code
